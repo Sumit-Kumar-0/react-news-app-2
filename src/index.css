@@ -21,7 +21,7 @@ a {
   --white-color: #efefef;
 }
 
-.active, nav.navbar ul a:hover {
+.active, nav.navbar ul a:hover, .language li:hover {
   border-bottom: 1.5px solid var(--white-color);
 }
 
@@ -31,6 +31,7 @@ header.header-container {
   background: var(--primary-color);
   display: flex;
   justify-content: center;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
 .header-content {
@@ -57,14 +58,23 @@ nav.navbar ul {
   gap: 30px;
   align-items: center;
 }
-nav.navbar ul a, button.btn-Navlink {
+nav.navbar ul a, button.btn-Navlink, .language li{
   color: var(--white-color) !important;
   font-size: 17px;
-  gap: 0.5px;
+  letter-spacing: 0.5px;
   text-transform: capitalize;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   padding: 5px;
+}
+
+button.btn-Navlink svg {
+  transform: rotateZ(0deg);
+  transition: all 0.2s ease-in-out;
+}
+button.btn-Navlink.dropdown-btn-active svg {
+  transform: rotateZ(180deg);
+  transition: all 0.2s ease-in-out;
 }
 
 .drop-down-menu{
@@ -72,17 +82,30 @@ nav.navbar ul a, button.btn-Navlink {
 }
 .dropdown {
   position: absolute;
-  bottom: -14px;
+  bottom: 40px;
+  z-index: -1;
+  height: 0px;
   background: var(--secondary-color);
   padding: 20px;
   flex-direction: column;
   left: 50%;
   transform: translate(-50% ,100%);
   min-width: 180px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  transition: all 0.1s ease-in-out;
+  overflow: hidden;
+}
+.active-dropdown.dropdown {
+  bottom: -27px;
+  z-index: 0;
+  height: fit-content;
 }
 button.btn-Navlink {
   background: none;
   border: none;
+  display: flex;
+  align-items: center;
+  gap: 2px;
 }
 form.search-form {
   flex-grow: 1;
@@ -103,4 +126,73 @@ button.btn-primary {
   text-transform: uppercase;
   background: var(--primary-color);
   color: var(--white-color);
+}
+footer.footer-container {
+  background: var(--primary-color);
+  padding: 30px;
+  font-size: 24px;
+  color: var(--white-color);
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  text-align: center;
+}
+aside.sidebar-container {
+  background: #00000070;
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  right: 0;
+}
+.aside-content {
+  background: var(--primary-color);
+  height: 100%;
+  width: 100%;
+  max-width: 400px;
+  margin-left: auto;
+  padding: 20px;
+  position: relative;
+  transition: all 1.5s ease-in-out;
+}
+.aside-header svg {
+  width: 40px;
+  height: 40px;
+  color: var(--white-color);
+}
+
+.aside-header {
+  position: absolute;
+  right: 0;
+  display: flex;
+  cursor: pointer;
+  padding: 10px;
+}
+.open-side-bar .aside-content {
+  background: var(--primary-color);
+  height: 100%;
+  width: 100%;
+  max-width: 400px;
+  margin-left: auto;
+  padding: 20px;
+  position: relative;
+  right: -500px;
+  transition: all 1.5s ease-in-out;
+}
+.aside-body {
+  padding-top: 80px;
+  color: var(--white-color);
+}
+
+ /* home */
+
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.content {
+  width: 100%;
+  max-width: 1440px;
+  padding: 20px;
+  font-size: 40px;
 }

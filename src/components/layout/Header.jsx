@@ -1,8 +1,21 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import logo from "../../assets/img/logo.png";
 import { Link, NavLink } from "react-router-dom";
+import { ChevronUp } from "lucide-react";
 
 export default function Header() {
+  const [dropdownState, setDropdownState] = useState({
+    others: false,
+    language: false,
+  });
+
+  const dropdownHandler = (dropdown) => {
+    setDropdownState({
+      ...dropdownState,
+      [dropdown]: !dropdownState[dropdown],
+    });
+  };
+
   return (
     <header className="header-container">
       <div className="header-content">
@@ -17,53 +30,77 @@ export default function Header() {
               <NavLink to="/all">All</NavLink>
             </li>
             <li>
-              <NavLink to="/politics">politics</NavLink>
+              <NavLink to="/politics">Politics</NavLink>
             </li>
             <li>
-              <NavLink to="/science">science</NavLink>
+              <NavLink to="/science">Science</NavLink>
             </li>
             <li>
-              <NavLink to="/crime">crime</NavLink>
+              <NavLink to="/crime">Crime</NavLink>
             </li>
             <li>
-              <button className="btn-Navlink">others</button>
+              <button
+                onClick={() => dropdownHandler("others")}
+                className={`btn-Navlink ${
+                  dropdownState.others ? "dropdown-btn-active" : ""
+                }`}
+              >
+                Others <ChevronUp />
+              </button>
               <div className="drop-down-menu">
-                <ul className="dropdown">
+                <ul
+                  className={`dropdown ${
+                    dropdownState.others ? "active-dropdown" : ""
+                  }`}
+                >
                   <li>
-                    <NavLink to="/">science</NavLink>
+                    <NavLink to="/technology">technology</NavLink>
                   </li>
                   <li>
-                    <NavLink to="/">science</NavLink>
+                    <NavLink to="/education">education</NavLink>
                   </li>
                   <li>
-                    <NavLink to="/">science</NavLink>
+                    <NavLink to="/cricket">cricket</NavLink>
                   </li>
                   <li>
-                    <NavLink to="/">science</NavLink>
+                    <NavLink to="/sports">sports</NavLink>
                   </li>
                   <li>
-                    <NavLink to="/">science</NavLink>
+                    <NavLink to="/jokes">jokes</NavLink>
                   </li>
                 </ul>
               </div>
             </li>
             <li>
-              <button className="btn-Navlink">language</button>
-              <ul className="dropdown">
-                <li>
-                  <NavLink to="/">Hindi</NavLink>
-                </li>
-                <li>
-                  <NavLink to="/">English</NavLink>
-                </li>
-              </ul>
+              <button
+                onClick={() => dropdownHandler("language")}
+                className={`btn-Navlink ${
+                  dropdownState.language ? "dropdown-btn-active" : ""
+                }`}
+              >
+                Language <ChevronUp />
+              </button>
+              <div className="drop-down-menu">
+                <ul
+                  className={`dropdown language ${
+                    dropdownState.language ? "active-dropdown" : ""
+                  }`}
+                >
+                  <li>
+                    Hindi
+                  </li>
+                  <li>
+                    English
+                  </li>
+                </ul>
+              </div>
             </li>
           </ul>
         </nav>
         <form className="search-form">
-          <input type="search" placeholder="type tp search..." />
+          <input type="search" placeholder="type to search..." />
           <button type="submit" className="btn-primary">
-            search
+            Search
           </button>
         </form>
         <div className="menu">
