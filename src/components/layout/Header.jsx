@@ -1,48 +1,63 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import logo from "../../assets/img/logo.png";
 import { Link, NavLink } from "react-router-dom";
 import { ChevronUp } from "lucide-react";
 
-export default function Header() {
-  const [dropdownState, setDropdownState] = useState({
+const Header = () => {
+  const [dropdownStates, setDropdownStates] = useState({
     others: false,
     language: false,
   });
 
-  const dropdownHandler = (dropdown) => {
-    setDropdownState({
-      ...dropdownState,
-      [dropdown]: !dropdownState[dropdown],
-    });
+  const toggleDropdown = (dropdown) => {
+    setDropdownStates((prevState) => ({
+      ...prevState,
+      [dropdown]: !prevState[dropdown],
+    }));
   };
+
+  const handleDropdownItemClick = () => {
+    setDropdownStates({
+      others: false,
+      language: false,
+    })
+  };
+
+  const languageOptions = ["Hindi", "English"];
+  const otherLinks = [
+    { to: "/technology", text: "Technology" },
+    { to: "/education", text: "Education" },
+    { to: "/cricket", text: "Cricket" },
+    { to: "/sports", text: "Sports" },
+    { to: "/jokes", text: "Jokes" },
+  ];
+  const navLinks = [
+    { to: "/all", text: "All" },
+    { to: "/politics", text: "Politics" },
+    { to: "/science", text: "Science" },
+    { to: "/crime", text: "Crime" },
+  ];
 
   return (
     <header className="header-container">
       <div className="header-content">
-        <Link to="/all">
+        <Link to="/all" onClick={() => handleDropdownItemClick()}>
           <div className="logo">
             <img src={logo} alt="logo" />
           </div>
         </Link>
         <nav className="navbar">
           <ul>
-            <li>
-              <NavLink to="/all">All</NavLink>
-            </li>
-            <li>
-              <NavLink to="/politics">Politics</NavLink>
-            </li>
-            <li>
-              <NavLink to="/science">Science</NavLink>
-            </li>
-            <li>
-              <NavLink to="/crime">Crime</NavLink>
-            </li>
+            {navLinks.map((link, index) => (
+              <li key={index}>
+                <NavLink to={link.to} onClick={() => handleDropdownItemClick()}>{link.text}</NavLink>
+              </li>
+            ))}
             <li>
               <button
-                onClick={() => dropdownHandler("others")}
+                onClick={() => toggleDropdown("others")}
                 className={`btn-Navlink ${
-                  dropdownState.others ? "dropdown-btn-active" : ""
+                  dropdownStates.others ? "dropdown-btn-active" : ""
                 }`}
               >
                 Others <ChevronUp />
@@ -50,32 +65,27 @@ export default function Header() {
               <div className="drop-down-menu">
                 <ul
                   className={`dropdown ${
-                    dropdownState.others ? "active-dropdown" : ""
+                    dropdownStates.others ? "active-dropdown" : ""
                   }`}
                 >
-                  <li>
-                    <NavLink to="/technology">technology</NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/education">education</NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/cricket">cricket</NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/sports">sports</NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/jokes">jokes</NavLink>
-                  </li>
+                  {otherLinks.map((link, index) => (
+                    <li key={index}>
+                      <NavLink
+                        to={link.to}
+                        onClick={() => handleDropdownItemClick()}
+                      >
+                        {link.text}
+                      </NavLink>
+                    </li>
+                  ))}
                 </ul>
               </div>
             </li>
             <li>
               <button
-                onClick={() => dropdownHandler("language")}
+                onClick={() => toggleDropdown("language")}
                 className={`btn-Navlink ${
-                  dropdownState.language ? "dropdown-btn-active" : ""
+                  dropdownStates.language ? "dropdown-btn-active" : ""
                 }`}
               >
                 Language <ChevronUp />
@@ -83,22 +93,24 @@ export default function Header() {
               <div className="drop-down-menu">
                 <ul
                   className={`dropdown language ${
-                    dropdownState.language ? "active-dropdown" : ""
+                    dropdownStates.language ? "active-dropdown" : ""
                   }`}
                 >
-                  <li>
-                    Hindi
-                  </li>
-                  <li>
-                    English
-                  </li>
+                  {languageOptions.map((lang, index) => (
+                    <li
+                      key={index}
+                      onClick={() => handleDropdownItemClick()}
+                    >
+                      {lang}
+                    </li>
+                  ))}
                 </ul>
               </div>
             </li>
           </ul>
         </nav>
         <form className="search-form">
-          <input type="search" placeholder="type to search..." />
+          <input type="search" placeholder="Type to search..." />
           <button type="submit" className="btn-primary">
             Search
           </button>
@@ -111,4 +123,6 @@ export default function Header() {
       </div>
     </header>
   );
-}
+};
+
+export default Header;

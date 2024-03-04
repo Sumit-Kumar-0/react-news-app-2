@@ -1,12 +1,21 @@
-import React from "react";
-import Home from "./pages/Home";
+import React, { useContext } from "react";
 import { Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
+import SearchContext from "./context/SearchContext";
 
-export default function App() {
+function App() {
+  const { search, updateSearch } = useContext(SearchContext);
+
+  const searchHandler = () => {
+    updateSearch("newwwwwwwwwww");
+  };
+
+  console.log(search);
 
   return (
     <>
+      <h1 onClick={searchHandler}>hello</h1>
       <Routes>
         <Route path="/" element={<Home q="all" />} />
         <Route path="/all" element={<Home q="all" />} />
@@ -23,3 +32,5 @@ export default function App() {
     </>
   );
 }
+
+export default App;
